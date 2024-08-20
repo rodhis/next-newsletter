@@ -19,7 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <nav className="flex gap-10">
               <Link href="/">Início</Link>
               <Link href="/about">Sobre</Link>
-              <Link href="/subscribers">Inscritos</Link>
+              <Link href="/admin/subscribers">Inscritos</Link>
             </nav>
           </header>
 
