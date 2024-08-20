@@ -3,32 +3,39 @@
 import { useState } from "react"
 
 export default function SubscribeForm() {
-  const [email, setEmail] = useState("")
+    const [email, setEmail] = useState("")
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
 
-    setEmail("")
-    alert("Email cadastrado com sucesso!")
-  }
+        const response = await fetch("/api/subscribers", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email }),
+        }).then((res) => res.json())
 
-  return (
-    <form
-      className="flex justify-center gap-4 p-4"
-      onSubmit={handleSubmit}
-    >
-      <input
-        type="email"
-        name="email"
-        id="email"
-        placeholder="Seu e-mail principal"
-        className="bg-slate-800 p-3 rounded"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <button className="bg-sky-700 p-3 rounded">
-        Se inscrever
-      </button>
-    </form>
-  )
+        console.log(response)
+
+        if (response.created) {
+            setEmail("")
+            alert("Email cadastrado com sucesso!")
+        } else {
+            alert("Erro ao cadastrar email")
+        }
+    }
+
+    return (
+        <form className="flex justify-center gap-4 p-4" onSubmit={handleSubmit}>
+            <input
+                type="email"
+                name="email"
+                id="email"
+                placeholder="Seu e-mail principal"
+                className="bg-slate-800 p-3 rounded"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+            />
+            <button className="bg-sky-700 p-3 rounded">Se inscrever</button>
+        </form>
+    )
 }
