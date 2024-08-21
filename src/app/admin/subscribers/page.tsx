@@ -10,6 +10,12 @@ interface Subscriber {
     createdAt: Date
 }
 
+function waitFor(ms:number) {
+    return new Promise<void>((resolve) => setTimeout(() => resolve(), ms))
+    //função para dar um tempo de carregamento artifical para ver o componente de loading
+  }
+
+
 export default async function Subscribers() {
 
     let rows: Subscriber[] = []
@@ -24,6 +30,9 @@ export default async function Subscribers() {
     } catch (error) {
         console.error("Database query failed:", error)
     }
+
+    // await waitFor(3000) //chamando a função de tempo de carregamento artificial
+    // throw new Error("Erro ao carregar inscritos!") //lançando um erro para ver o componente de erro
 
     return (
         <main>
